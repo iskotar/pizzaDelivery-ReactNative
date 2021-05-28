@@ -44,7 +44,7 @@ export default function orderList(state = [], action) {
     case 'DELETE':
       return state.filter(el => el.id !== action.payload)
 
-    case 'RESET':
+    case 'RESET_ORDER':
       return []
 
     default:

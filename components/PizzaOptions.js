@@ -39,7 +39,9 @@ const PizzaOptions = ({ currentSelection, setOrder }) => {
             <TouchableOpacity
               key={idx}
               style={[
-                styles.sizeElement, {
+                styles.sizeElement,
+                styles.shadow,
+                {
                   backgroundColor: size.name === selectedSize.name ? '#adcd34' : 'white',
                 }]}
               onPress={() => setSelectedSize(size)}
@@ -78,6 +80,7 @@ const PizzaOptions = ({ currentSelection, setOrder }) => {
           step={1}
           thumbStyle={{ height: 30, width: 30, backgroundColor: '#adcd34' }}
           thumbTouchSize={{ height: 30, width: 30 }}
+          style={styles.shadow}
         />
 
         <Text style={styles.cheeseLvlFont}>{selectedCheese.lvl}</Text>
@@ -110,7 +113,8 @@ const styles = StyleSheet.create({
 
   sizeList: {
     flexDirection: 'row',
-    marginTop: 20
+    marginTop: 20,
+    justifyContent: 'space-between'
   },
 
   sizeElement: {
@@ -132,6 +136,15 @@ const styles = StyleSheet.create({
   sizeFont: {
     fontWeight: 'bold',
     marginTop: 5
+  },
+
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 5
   },
 
   cheeseLvlFont: {

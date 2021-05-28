@@ -17,7 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.delivery.ios",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAMPwg2GmuHVq301-VZ-Ei0eftVR8Z31rA"
+      }
     },
     "android": {
       "adaptiveIcon": {

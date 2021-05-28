@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import { Entypo, Ionicons } from '@expo/vector-icons'
 import PrimarySubmitButton from './PrimarySubmitButton'
 import { connect } from 'react-redux'
 import { estimateDelivery } from '../redux/actions/orderListActions'
@@ -26,8 +26,8 @@ const DestinationAddress = ({ navigation, estimate }) => {
   return (
     <SafeAreaView>
       <View style={styles.topNav}>
-        <AntDesign
-          name="back"
+        <Ionicons
+          name="md-chevron-back"
           size={30}
           onPress={() => navigation.goBack()}
           color='grey'

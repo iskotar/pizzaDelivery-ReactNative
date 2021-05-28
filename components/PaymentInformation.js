@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import { Entypo, Ionicons } from '@expo/vector-icons'
 import PrimarySubmitButton from './PrimarySubmitButton'
 import { connect } from 'react-redux'
 
@@ -25,8 +25,8 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
   return (
     <SafeAreaView>
       <View style={styles.topNav}>
-        <AntDesign
-          name="back"
+        <Ionicons
+          name="md-chevron-back"
           size={30}
           onPress={() => navigation.goBack()}
           color='grey'
@@ -78,7 +78,7 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
         }
 
         <PrimarySubmitButton
-          onPress={() => navigation.navigate('PaymentInformation')}
+          onPress={() => navigation.navigate('DeliveryNav', orderTotal.deliveryAddress)}
           children={<Entypo name='credit-card' size={30} color='white'/>}
           text='Pay'
         />

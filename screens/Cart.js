@@ -9,7 +9,6 @@ import {
 } from '../redux/actions/orderListActions'
 import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'
-import { AppModal } from '../components/AppModal'
 import PrimarySubmitButton from '../components/PrimarySubmitButton'
 import DestinationAddress from '../components/DestinationAddress'
 
@@ -63,7 +62,7 @@ const Cart = ({ orderList, subtotal, deleteItem, orderCountPlus, orderCountMinus
       <View style={styles.infoContainer}>
         <View style={styles.totalInfo}>
           <PrimarySubmitButton
-            onPress={() => navigation.navigate('DestinationAddress')}
+            onPress={() => orderList.length && navigation.navigate('DestinationAddress')}
             text='Checkout'
           />
 

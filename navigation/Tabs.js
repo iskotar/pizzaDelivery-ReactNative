@@ -1,13 +1,13 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DeliveryNav from '../screens/DeliveryNav'
-import Order from '../screens/Order'
 import Cart from '../screens/Cart'
 import { Entypo } from '@expo/vector-icons'
 import Svg, { Path } from 'react-native-svg'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Badge } from 'react-native-elements'
 import { connect } from 'react-redux'
+import Pizzerias from '../screens/Pizzerias'
 
 const Tab = createBottomTabNavigator()
 
@@ -35,17 +35,7 @@ const Tabs = ({orderList}) => {
           <View style={{ flex:1, backgroundColor: 'white'}}/>
         </View>
         <TouchableOpacity
-          style={{
-            top: -22.5,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: 'white',
-            borderColor: '#adcd34',
-            borderWidth: 1
-          }}
+          style={styles.selectedButton}
           onPress={onPress}
         >
           {children}
@@ -63,7 +53,7 @@ const Tabs = ({orderList}) => {
         activeOpacity={1}
         onPress={onPress}
       >
-        {orderList.length && isCart  ? <Badge value={orderList.length} badgeStyle={{ backgroundColor: '#adcd34'}}/> : null}
+        {orderList.length && isCart  ? <Badge value={orderList.length} badgeStyle={styles.badge}/> : null}
         {children}
       </TouchableOpacity>
     )
@@ -86,7 +76,7 @@ const Tabs = ({orderList}) => {
      >
        <Tab.Screen
          name='Home'
-         component={Order}
+         component={Pizzerias}
          options={{
            tabBarIcon: ({focused} ) => (
              <Entypo name="bowl" size={30} color={focused ? '#adcd34' : 'gray'}/>
@@ -121,7 +111,7 @@ const Tabs = ({orderList}) => {
          }}
        />
      </Tab.Navigator>
-     <View style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, height: 40, width: '100%', zIndex: 0}}/>
+     <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, height: 40, width: '100%', zIndex: 0}}/>
    </>
   )
 }
@@ -131,3 +121,30 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(Tabs)
+
+
+const styles = StyleSheet.create({
+  selectedButton: {
+    top: -22.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    borderColor: '#adcd34',
+    borderWidth: 1,
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10
+  },
+
+  badge: {
+    backgroundColor: '#adcd34',
+    position: 'absolute',
+    marginTop: 5
+  }
+})

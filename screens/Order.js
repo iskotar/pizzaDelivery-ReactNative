@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, ScrollView, Image } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 import { pizzaTypes } from '../constants'
 import PizzaOptions from '../components/PizzaOptions'
 import { AppModal } from '../components/AppModal'
 import { connect } from 'react-redux'
 import { addToOrder } from '../redux/actions/orderListActions'
 
-export const Order = ({ addToOrderList }) => {
+const Order = ({ addToOrderList, navigation, route }) => {
   const [showOptions, setShowOptions] = useState(false)
   const [currentSelection, setCurrentSelection] = useState()
   const [order, setOrder] = useState({})
@@ -22,17 +22,17 @@ export const Order = ({ addToOrderList }) => {
     setShowOptions(true);
   }
 
-  const RenderHeader = () => {
+  const   Header = () => {
     return (
       <View style={styles.header}>
         <TouchableOpacity
-          style={styles.locationBtn}
+          onPress={() => navigation.goBack()}
         >
-          <Entypo name='location-pin' size={30} color='black'/>
+          <Ionicons name="md-chevron-back" size={30} color="grey" />
         </TouchableOpacity>
 
         <View style={styles.locationAddress}>
-          <Text>524 Baker Street</Text>
+          <Text style={{ overflow: 'hidden'}} numberOfLines={1}>{route.params}</Text>
         </View>
       </View>
     )
@@ -64,8 +64,8 @@ export const Order = ({ addToOrderList }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <RenderHeader/>
+    <View style={styles.container}>
+      <Header/>
       <ScrollView style={{ }}>
         <PizzaTypesList/>
       </ScrollView>
@@ -77,39 +77,49 @@ export const Order = ({ addToOrderList }) => {
       >
         <PizzaOptions currentSelection={currentSelection} setOrder={setOrder}/>
       </AppModal>
-    </SafeAreaView>
+    </View>
   )
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addToOrderList: (item) => dispatch(addToOrder(item)),
+})
+
+export default connect(null, mapDispatchToProps)(Order)
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: 'white',
+    paddingBottom: 70
   },
 
   list: {
-    marginBottom: 70
+    marginBottom: 70,
+    marginTop: 20
   },
 
   header: {
     flexDirection: 'row',
-    height: 50,
-    marginBottom: 10,
-    justifyContent: 'space-between',
-    marginHorizontal: 20
-  },
-
-  locationBtn: {
-    width: 50,
-    justifyContent: 'center'
+    backgroundColor: '#adcd34',
+    paddingTop: 50,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    zIndex: 1
   },
 
   locationAddress: {
-    width: '70%',
-    height: '100%',
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 25
+    borderRadius: 25,
+    paddingHorizontal: 10,
+    marginHorizontal: 20,
   },
 
   pizzaType: {
@@ -120,7 +130,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '90%',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5
   },
 
   pizzaImage: {
@@ -132,9 +148,3 @@ const styles = StyleSheet.create({
     borderWidth: 5
   }
 })
-
-const mapDispatchToProps = (dispatch) => ({
-  addToOrderList: (item) => dispatch(addToOrder(item)),
-})
-
-export default connect(null, mapDispatchToProps)(Order)
