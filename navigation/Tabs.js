@@ -2,7 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DeliveryNav from '../screens/DeliveryNav'
 import Cart from '../screens/Cart'
-import { Entypo } from '@expo/vector-icons'
+import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Svg, { Path } from 'react-native-svg'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Badge } from 'react-native-elements'
@@ -11,17 +11,16 @@ import Pizzerias from '../screens/Pizzerias'
 
 const Tab = createBottomTabNavigator()
 
-const Tabs = ({orderList}) => {
+const Tabs = ({ orderList }) => {
 
-  const TabBarCustomButton = ({accessibilityState, accessibilityLabel, children, onPress}) => {
-    const isSelected = accessibilityState.selected;
+  const TabBarCustomButton = ({ accessibilityState, accessibilityLabel, children, onPress }) => {
+    const isSelected = accessibilityState.selected
     const isCart = !isSelected && accessibilityLabel.split(',')[0] === 'Cart'
 
-
-    if(isSelected) return (
-      <View style={{ flex: 1, alignItems: 'center'}}>
-        <View style={{ flexDirection: 'row', position: 'absolute', top: 0}}>
-          <View style={{ flex: 1, backgroundColor: 'white'}}/>
+    if (isSelected) return (
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', position: 'absolute', top: 0 }}>
+          <View style={{ flex: 1, backgroundColor: 'white' }}/>
           <Svg
             width={75}
             height={61}
@@ -32,7 +31,7 @@ const Tabs = ({orderList}) => {
               fill='white'
             />
           </Svg>
-          <View style={{ flex:1, backgroundColor: 'white'}}/>
+          <View style={{ flex: 1, backgroundColor: 'white' }}/>
         </View>
         <TouchableOpacity
           style={styles.selectedButton}
@@ -53,66 +52,66 @@ const Tabs = ({orderList}) => {
         activeOpacity={1}
         onPress={onPress}
       >
-        {orderList.length && isCart  ? <Badge value={orderList.length} badgeStyle={styles.badge}/> : null}
+        {orderList.length && isCart ? <Badge value={orderList.length} badgeStyle={styles.badge}/> : null}
         {children}
       </TouchableOpacity>
     )
   }
 
   return (
-   <>
-     <Tab.Navigator
-       tabBarOptions={{
-         showLabel: false,
-         style: {
-           backgroundColor: 'transparent',
-           borderTopWidth: 0,
-           elevation: 0,
-           bottom: 0,
-           position: 'absolute',
-           zIndex: 1
-         }
-       }}
-     >
-       <Tab.Screen
-         name='Home'
-         component={Pizzerias}
-         options={{
-           tabBarIcon: ({focused} ) => (
-             <Entypo name="bowl" size={30} color={focused ? '#adcd34' : 'gray'}/>
-           ),
-           tabBarButton: (props) => (
-             <TabBarCustomButton {...props}/>
-           )
-         }}
-       />
-       <Tab.Screen
-         name='Cart'
-         component={Cart}
-         options={{
-           tabBarIcon: ({focused} ) => (
-             <Entypo name="shopping-cart" size={30} color={focused ? '#adcd34' : 'gray'}/>
-           ),
-           tabBarButton: (props) => (
-             <TabBarCustomButton {...props}/>
-           )
-         }}
-       />
-       <Tab.Screen
-         name='DeliveryNav'
-         component={DeliveryNav}
-         options={{
-           tabBarIcon: ({focused} ) => (
-             <Entypo name="location" size={30} color={focused ? '#adcd34' : 'gray'}/>
-           ),
-           tabBarButton: (props) => (
-             <TabBarCustomButton {...props}/>
-           )
-         }}
-       />
-     </Tab.Navigator>
-     <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, height: 40, width: '100%', zIndex: 0}}/>
-   </>
+    <>
+      <Tab.Navigator
+        tabBarOptions={{
+          showLabel: false,
+          style: {
+            backgroundColor: 'transparent',
+            borderTopWidth: 0,
+            elevation: 0,
+            bottom: 0,
+            position: 'absolute',
+            zIndex: 1
+          }
+        }}
+      >
+        <Tab.Screen
+          name='Home'
+          component={Pizzerias}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons name="pizza" size={30} color={focused ? '#adcd34' : 'gray'}/>
+            ),
+            tabBarButton: (props) => (
+              <TabBarCustomButton {...props}/>
+            )
+          }}
+        />
+        <Tab.Screen
+          name='Cart'
+          component={Cart}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="cart" size={30} color={focused ? '#adcd34' : 'gray'}/>
+            ),
+            tabBarButton: (props) => (
+              <TabBarCustomButton {...props}/>
+            )
+          }}
+        />
+        <Tab.Screen
+          name='DeliveryNav'
+          component={DeliveryNav}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Entypo name="location" size={30} color={focused ? '#adcd34' : 'gray'}/>
+            ),
+            tabBarButton: (props) => (
+              <TabBarCustomButton {...props}/>
+            )
+          }}
+        />
+      </Tab.Navigator>
+      <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, height: 40, width: '100%', zIndex: 0 }}/>
+    </>
   )
 }
 
@@ -121,7 +120,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(Tabs)
-
 
 const styles = StyleSheet.create({
   selectedButton: {

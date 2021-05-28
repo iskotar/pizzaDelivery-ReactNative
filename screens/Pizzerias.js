@@ -19,11 +19,11 @@ const Pizzerias = ({ navigation, restaurants }) => {
     return (
       <View style={styles.list}>
         {
-          restaurants.map(({photos, name, user_ratings_total }, idx) => (
+          restaurants.map(({photos, name, user_ratings_total, vicinity }, idx) => (
             <TouchableOpacity
               key={idx}
               style={styles.pizzaType}
-              onPress={() => navigation.navigate('Order', name)}
+              onPress={() => navigation.navigate('Order', { vicinity })}
             >
               <ImageBackground
                 borderRadius={20}
@@ -34,7 +34,7 @@ const Pizzerias = ({ navigation, restaurants }) => {
               >
                 <View style={styles.info}>
                   <Text style={styles.text}>
-                    {name}
+                    {vicinity}
                   </Text>
                   <Text style={styles.text}>
                     <Entypo name='star-outlined' size={30} color='white'/>

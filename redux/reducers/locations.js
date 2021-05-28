@@ -7,6 +7,12 @@ export default function locations(state = {}, action) {
         restaurants: action.payload
       }
 
+    case 'USER_LOCATION':
+      return {
+        ...state,
+        userLocation: action.payload
+      }
+
     default:
       return state
   }

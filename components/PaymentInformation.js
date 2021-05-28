@@ -9,10 +9,6 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
   const [formValue, setFormValue] = useState({})
   const inputs = ['First name', 'Last name', 'Card number', 'Exp. date', 'CVC Code']
   const total = orderTotal.subtotal + orderTotal.tax + orderTotal.deliveryPrice
-  const { Address, City, Email, Phone, ZIP } = orderTotal.deliveryAddress
-  const deliveryAddress = `${Address}, ${City}, ${ZIP}`
-
-  console.log(orderTotal.deliveryAddress)
 
   const onChangeValues = (val, name) => {
     const newFormValue = {
@@ -53,11 +49,11 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
         </View>
 
         <Text style={styles.textBold}>Delivery Address:</Text>
-        <Text>{deliveryAddress}</Text>
+        <Text>{orderTotal.destination.address}</Text>
 
         <Text style={styles.textBold}>Contacting Information:</Text>
-        <Text>{Email}</Text>
-        <Text>{Phone}</Text>
+        <Text>{orderTotal.destination.email}</Text>
+        <Text>{orderTotal.destination.phone}</Text>
       </View>
 
       <View style={styles.list}>
@@ -78,7 +74,7 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
         }
 
         <PrimarySubmitButton
-          onPress={() => navigation.navigate('DeliveryNav', orderTotal.deliveryAddress)}
+          onPress={() => navigation.navigate('Home', { screen: 'DeliveryNav' })}
           children={<Entypo name='credit-card' size={30} color='white'/>}
           text='Pay'
         />
@@ -91,11 +87,7 @@ const mapStateToProps = (state) => ({
   orderTotal: state.orderTotal,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  // deleteItem: (id) => dispatch(estimateDelivery(id)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentInformation)
+export default connect(mapStateToProps)(PaymentInformation)
 
 const styles = StyleSheet.create({
   topNav: {

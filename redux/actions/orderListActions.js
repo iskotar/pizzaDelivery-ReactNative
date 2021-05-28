@@ -1,5 +1,5 @@
-import { getUserLocation } from '../../mapAPI'
 import { GOOGLE_MAP_API_KEY } from '../../constants'
+import * as Location from 'expo-location'
 
 export function addToOrder (item) {
 
@@ -45,19 +45,49 @@ export function passOrderListToTotal () {
   }
 }
 
-export function estimateDelivery (address) {
+export function estimateDelivery (destination) {
   return {
     type: 'ESTIMATE_DELIVERY',
     payload: {
-      destination: address,
+      destination: destination,
       price: 10
     }
   }
 }
 
-export function getNearbyPlacesBySearchRequest() {
+export function getUserLocation () {
   return async (dispatch) => {
-    const { latitude, longitude } = await getUserLocation();
+    let { status } = await Location.requestForegroundPermissionsAsync()
+
+    if (status !== 'granted') {
+      console.log('User: Permission to access location was denied')
+      return
+    }
+
+    let location = await Location.getCurrentPositionAsync({})
+
+    const userLocation = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.10,
+      longitudeDelta: 0
+    }
+
+    dispatch({
+      type: 'USER_LOCATION',
+      payload: userLocation
+    })
+
+    return userLocation
+  }
+}
+
+
+export function getNearbyPlacesBySearchRequest () {
+  return async (dispatch) => {
+
+    const {latitude, longitude} = await dispatch(getUserLocation())
+
     const location = `location=${latitude},${longitude}`;
     const radiusAndType = 'radius=1500&type=restaurant';
     const searchText = 'pizza restaurants';

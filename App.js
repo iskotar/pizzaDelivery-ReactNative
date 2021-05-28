@@ -9,6 +9,7 @@ import PaymentInformation from './components/PaymentInformation'
 import DeliveryNav from './screens/DeliveryNav'
 import Order from './screens/Order'
 import LocationLayout from './layouts/LocationLayout'
+import Cart from './screens/Cart'
 
 const Stack = createStackNavigator()
 
@@ -24,6 +25,7 @@ export default function App () {
           >
             <Stack.Screen name='Home' component={Tabs}/>
             <Stack.Screen name='Order' component={Order}/>
+            <Stack.Screen name='Cart' component={Cart}/>
             <Stack.Screen name='DestinationAddress' component={DestinationAddress}/>
             <Stack.Screen name='PaymentInformation' component={PaymentInformation}/>
             <Stack.Screen name='DeliveryNav' component={DeliveryNav}/>

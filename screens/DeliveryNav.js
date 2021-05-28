@@ -1,75 +1,94 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps'
-import { Entypo } from '@expo/vector-icons'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import { Ionicons } from '@expo/vector-icons'
 import MapViewDirections from 'react-native-maps-directions'
 import { GOOGLE_MAP_API_KEY } from '../constants'
-import { getAddressLocation, getNearbyPlacesBySearchRequest, getUserLocation } from '../mapAPI'
+import { connect } from 'react-redux'
 
 
-const DeliveryNav = ({ route }) => {
-const [restaurantLocation, setRestaurantLocation] = useState()
-const [destinationLocation, setDestinationLocation] = useState()
-const [userLocation, setUserLocation] = useState()
+const DeliveryNav = ({ locations, orderList, orderTotal }) => {
+  const destinationAddress = orderTotal.destination.address
+  const restaurantsInOrder = orderList.map(({ restaurant }) => restaurant)
+  const Restaurants = () => {
+    return locations.restaurants.map(({ geometry, name, vicinity }, idx) => (
+      <Marker
+        key={idx}
+        coordinate={{
+          longitude: geometry.location.lng,
+          latitude: geometry.location.lat
+        }}
+        title={vicinity}
+      >
+        <View style={{borderRadius: 25, borderWidth: 1, borderColor: '#adcd34', backgroundColor: 'white', padding: 5}}>
+          <Ionicons name="pizza" size={25} color='black'/>
+        </View>
+      </Marker>
+    ))
+  }
 
+  const RoutePoints = () => {
+    return locations.restaurants.map(({ geometry, name, vicinity }, idx) => {
+      if (!restaurantsInOrder.includes(name)) return null
 
-  useEffect(() => {
-    (async () => {
-      // const locU = await getUserLocation()
-      // setUserLocation(locU)
-      // const loc = await getAddressLocation('pizza restaurants Fremont, CA')
-      // setAddressLocation(loc)
+      return (
+        <Marker
+          key={idx}
+          coordinate={{
+            longitude: geometry.location.lng,
+            latitude: geometry.location.lat
+          }}
+          title={vicinity}
+        >
+          <View
+            style={{ borderRadius: 25, borderWidth: 1, borderColor: '#adcd34', backgroundColor: 'white', padding: 5 }}>
+            <Ionicons name="pizza" size={25} color='black'/>
+          </View>
+        </Marker>
+      )
+    })
+  }
 
-      // await getNearbyPlacesBySearchRequest('pizza restaurants Fremont, CA')
-    })()
-
-    // return () => (async () => {
-    //   const loc = await getAddressLocation('Apple Park Visitor Center')
-    //   setAddressLocation(loc)
-    // })()
-  },[])
-
-  const Map = () => {
-
-    // const origin = {
-    //   latitude: 37.5497738,
-    //   longitude: -121.9881435,
-    //   latitudeDelta: 0.10,
-    //   longitudeDelta: 0
-    // }
-    // const destination = {
-    //   latitude: 37.5491738,
-    //   longitude: -121.9181435,
-    //   latitudeDelta: 0.10,
-    //   longitudeDelta: 0
-    // }
-
+  const Route = () => {
+    if (!orderList.length) return null
 
     return (
-      <MapView
-        style={styles.mapStyle}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={restaurantLocation}
-        showsUserLocation
-      >
-
-        <MapViewDirections
-          origin={restaurantLocation}
-          destination={destinationLocation}
-          apikey={GOOGLE_MAP_API_KEY}
-          strokeWidth={3}
-          strokeColor="hotpink"
-        />
-      </MapView>
+      <MapViewDirections
+        origin={orderList[0].address}
+        destination={destinationAddress.trim().length ? destinationAddress : locations.userLocation}
+        apikey={GOOGLE_MAP_API_KEY}
+        strokeWidth={5}
+        strokeColor='hotpink'
+        waypoints={orderList.map(({ address }) => address)}
+        optimizeWaypoints
+      />
     )
   }
 
   return (
     <View style={styles.container}>
-      <Map/>
+      <MapView
+        style={styles.mapStyle}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={locations.userLocation}
+        showsUserLocation
+      >
+        {
+          restaurantsInOrder.length ? <RoutePoints/> : <Restaurants/>
+        }
+        <Route/>
+      </MapView>
     </View>
   )
 }
+
+const mapStateToProps = (state) => ({
+  locations: state.locations,
+  orderList: state.orderList,
+  orderTotal: state.orderTotal,
+})
+
+export default connect(mapStateToProps)(DeliveryNav)
 
 const styles = StyleSheet.create({
   container: {
@@ -83,5 +102,3 @@ const styles = StyleSheet.create({
     height: '100%'
   },
 })
-
-export default DeliveryNav

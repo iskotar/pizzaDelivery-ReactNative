@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
 import { Entypo, Ionicons } from '@expo/vector-icons'
@@ -6,21 +6,39 @@ import PrimarySubmitButton from './PrimarySubmitButton'
 import { connect } from 'react-redux'
 import { estimateDelivery } from '../redux/actions/orderListActions'
 
+const initialState = {
+  Address: '',
+  City: '',
+  ZIP: '',
+  Phone: '',
+  Email: '',
+  error: false
+}
+
 const DestinationAddress = ({ navigation, estimate }) => {
-  const [formValue, setFormValue] = useState({})
+  const [state, setState] = useState(initialState)
+
+  useEffect(() => () => setState(initialState), [])
+
   const inputs = ['Address', 'City', 'ZIP', 'Phone', 'Email']
 
   const onChangeValues = (val, name) => {
-    const newFormValue = {
-      ...formValue,
-      [name]: val
-    }
-    setFormValue(newFormValue)
+    setState({ ...state, [name]: val, error: false })
   }
 
   const onSubmit = () => {
-    estimate(formValue)
-    navigation.navigate('PaymentInformation')
+
+    const isAllFieldsFiled = inputs.every(field => state[field].length > 1)
+
+    if (isAllFieldsFiled) {
+      const destination = {
+        address: `${state.Address} ${state.City} ${state.ZIP}`.trim(),
+        phone: state.Phone,
+        email: state.Email
+      }
+      estimate(destination)
+      navigation.navigate('PaymentInformation')
+    } else setState({ ...state, error: true })
   }
 
   return (
@@ -44,14 +62,19 @@ const DestinationAddress = ({ navigation, estimate }) => {
               key={idx}
               style={styles.input}
             >
-              <Label>{name}</Label>
+              <Label>{name}*</Label>
               <Input
-                value={formValue.address}
-                onChangeText={(val) => val && onChangeValues(val, name)}
+                value={state[name]}
+                onChangeText={(val) => onChangeValues(val, name)}
               />
             </Item>
           ))
         }
+
+        {state.error &&
+        <Text style={{ color: 'red' }}>
+          All fields are required
+        </Text>}
 
         <PrimarySubmitButton
           onPress={onSubmit}
@@ -68,7 +91,6 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(null, mapDispatchToProps)(DestinationAddress)
-
 
 const styles = StyleSheet.create({
   topNav: {

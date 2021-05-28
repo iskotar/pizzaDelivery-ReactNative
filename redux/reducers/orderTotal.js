@@ -19,7 +19,7 @@ export default function orderTotal(state = initialState, action) {
     case 'ESTIMATE_DELIVERY':
       return {
         ...state,
-        deliveryAddress: action.payload.destination,
+        destination: action.payload.destination,
         deliveryPrice: action.payload.price
       }
 

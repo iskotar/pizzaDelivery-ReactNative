@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { pizzaTypes } from '../constants'
 import PizzaOptions from '../components/PizzaOptions'
 import { AppModal } from '../components/AppModal'
@@ -13,27 +13,37 @@ const Order = ({ addToOrderList, navigation, route }) => {
   const [order, setOrder] = useState({})
 
   const onAddToOrder = () => {
-    addToOrderList(order)
+    addToOrderList({
+      ...order,
+      address: route.params.vicinity,
+      restaurant: route.params.name
+    })
     setShowOptions(false)
   }
 
   const onCurrentPizza = (pizza) => {
-    setCurrentSelection(pizza);
-    setShowOptions(true);
+    setCurrentSelection(pizza)
+    setShowOptions(true)
   }
 
-  const   Header = () => {
+  const Header = () => {
     return (
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="md-chevron-back" size={30} color="grey" />
+          <Ionicons name="md-chevron-back" size={30} color="white"/>
         </TouchableOpacity>
 
-        <View style={styles.locationAddress}>
-          <Text style={{ overflow: 'hidden'}} numberOfLines={1}>{route.params}</Text>
+        <View style={styles.locationName}>
+          <Text numberOfLines={1}>{route.params.vicinity}</Text>
         </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Home', { screen: 'Cart' })}
+        >
+          <MaterialCommunityIcons name="cart" size={30} color={'white'}/>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -66,7 +76,7 @@ const Order = ({ addToOrderList, navigation, route }) => {
   return (
     <View style={styles.container}>
       <Header/>
-      <ScrollView style={{ }}>
+      <ScrollView style={{}}>
         <PizzaTypesList/>
       </ScrollView>
       <AppModal
@@ -110,15 +120,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    zIndex: 1
+    zIndex: 1,
+    justifyContent: 'space-between',
+    display: 'flex',
+    maxWidth: '100%',
   },
 
-  locationAddress: {
+  locationName: {
     backgroundColor: 'white',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 25,
     paddingHorizontal: 10,
+    flex: 1,
     marginHorizontal: 20,
   },
 
