@@ -32,6 +32,9 @@ export default function orderTotal(state = initialState, action) {
         isPayed: true
       }
 
+    case 'RESET_TOTAL':
+      return initialState
+
     default:
       return state
   }

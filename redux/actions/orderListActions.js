@@ -36,6 +36,12 @@ export function resetOrder () {
   }
 }
 
+export function resetTotal () {
+  return {
+    type: 'RESET_TOTAL'
+  }
+}
+
 export function passOrderListToTotal () {
   return (dispatch, getState) => {
     dispatch({

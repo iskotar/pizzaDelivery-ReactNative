@@ -9,7 +9,7 @@ import { useFocusEffect } from '@react-navigation/native'
 
 
 const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
-  console.log(orderTotal)
+
   useFocusEffect(
     React.useCallback(() => {
       console.log('DeliveryNav mounted')

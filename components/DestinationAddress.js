@@ -28,7 +28,7 @@ const DestinationAddress = ({ navigation, estimate }) => {
 
   const onSubmit = () => {
 
-    const isAllFieldsFiled = inputs.every(field => state[field].length > 1)
+    const isAllFieldsFiled = inputs.every(field => state[field].length > 0)
 
     if (isAllFieldsFiled) {
       const destination = {

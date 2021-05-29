@@ -5,7 +5,7 @@ import {
   decreaseOrderCount,
   deleteFromOrder,
   increaseOrderCount,
-  passOrderListToTotal
+  passOrderListToTotal, resetOrder, resetTotal
 } from '../redux/actions/orderListActions'
 import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'
@@ -21,9 +21,10 @@ const Cart = ({
                 orderCountMinus,
                 navigation,
                 passOrdersToTotal,
-                isPayed
+                isPayed,
+                resetTotal,
+                resetOrder
               }) => {
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,6 +39,11 @@ const Cart = ({
   useEffect(() => {
     passOrdersToTotal()
   }, [orderList])
+
+  const cancelOrder = () => {
+    resetOrder()
+    resetTotal()
+  }
 
   const Row = ({ el }) => {
 
@@ -126,8 +132,18 @@ const Cart = ({
             <TotalOrdersInfo/>
             </>
           :
-          <View style={{ alignItems: 'center'}}>
-            <Text style={{backgroundColor: 'white', padding: 20, marginTop: 20, borderRadius: 20}}>Order Payed</Text>
+
+          <View style={styles.infoContainer}>
+            <View style={styles.totalInfo}>
+              <PrimarySubmitButton
+                onPress={cancelOrder}
+                text='Cancel Order'
+              />
+
+              <View style={styles.infoSum}>
+                <Text >Order Payed</Text>
+              </View>
+            </View>
           </View>
         }
       </ScrollView>
@@ -146,6 +162,8 @@ const mapDispatchToProps = (dispatch) => ({
   orderCountPlus: (id, price) => dispatch(increaseOrderCount(id, price)),
   orderCountMinus: (id, price) => dispatch(decreaseOrderCount(id, price)),
   passOrdersToTotal: () => dispatch(passOrderListToTotal()),
+  resetOrder: () => dispatch(resetOrder()),
+  resetTotal: () => dispatch(resetTotal()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
