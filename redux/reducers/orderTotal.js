@@ -1,7 +1,9 @@
 const initialState = {
   subtotal: 0,
   tax: 0,
-  deliveryPrice: 0
+  deliveryPrice: 0,
+  isPayed: false,
+  destination: null
 }
 
 export default function orderTotal(state = initialState, action) {
@@ -21,6 +23,13 @@ export default function orderTotal(state = initialState, action) {
         ...state,
         destination: action.payload.destination,
         deliveryPrice: action.payload.price
+      }
+
+    case 'PAY_AND_FINISH':
+      return {
+        ...state,
+        creditCard: action.payload,
+        isPayed: true
       }
 
     default:

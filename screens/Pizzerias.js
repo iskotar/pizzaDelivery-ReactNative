@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -11,15 +11,26 @@ import {
 import { connect } from 'react-redux'
 import { GOOGLE_MAP_API_KEY } from '../constants'
 import { Entypo } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native';
 
 const Pizzerias = ({ navigation, restaurants }) => {
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('Pizzerias mounted')
+
+      return () => {
+        console.log('Pizzerias UNmounted')
+      };
+    }, [navigation])
+  )
 
   const List = () => {
 
     return (
       <View style={styles.list}>
         {
-          restaurants.map(({photos, name, user_ratings_total, vicinity }, idx) => (
+          restaurants.map(({ photos, name, user_ratings_total, vicinity }, idx) => (
             <TouchableOpacity
               key={idx}
               style={styles.pizzaType}
@@ -65,7 +76,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(Pizzerias)
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
   },
 
   info: {
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
     height: 100,
@@ -104,9 +114,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 22,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   }
 })

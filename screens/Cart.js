@@ -11,12 +11,33 @@ import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'
 import PrimarySubmitButton from '../components/PrimarySubmitButton'
 import DestinationAddress from '../components/DestinationAddress'
+import { useFocusEffect } from '@react-navigation/native'
 
-const Cart = ({ orderList, subtotal, deleteItem, orderCountPlus, orderCountMinus, navigation, passOrdersToTotal }) => {
+const Cart = ({
+                orderList,
+                subtotal,
+                deleteItem,
+                orderCountPlus,
+                orderCountMinus,
+                navigation,
+                passOrdersToTotal,
+                isPayed
+              }) => {
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('Cart mounted')
+
+      return () => {
+        console.log('Cart UNmounted')
+      };
+    }, [navigation])
+  )
 
   useEffect(() => {
     passOrdersToTotal()
-  },[orderList])
+  }, [orderList])
 
   const Row = ({ el }) => {
 
@@ -79,29 +100,36 @@ const Cart = ({ orderList, subtotal, deleteItem, orderCountPlus, orderCountMinus
       <View style={styles.title}>
         <Text style={styles.fontBold}>Cart:</Text>
       </View>
-
       <ScrollView>
-        <View style={styles.list}>
-          {
-            orderList.map((el) => (
-              <SwipeRow
-                key={el.id}
-                rightOpenValue={-75}
-                disableRightSwipe
-                preview
-                style={{ height: 107 }}
-                right={
-                  <Button danger onPress={() => deleteItem(el.id)}>
-                    <Icon active name="trash"/>
-                  </Button>
-                }
-                body={<Row el={el}/>}
-              />
-            ))
-          }
-        </View>
+        {!isPayed ?
+          <>
+            <View style={styles.list}>
+              {
+                orderList.map((el) => (
+                  <SwipeRow
+                    key={el.id}
+                    rightOpenValue={-75}
+                    disableRightSwipe
+                    preview
+                    style={{ height: 107 }}
+                    right={
+                      <Button danger onPress={() => deleteItem(el.id)}>
+                        <Icon active name="trash"/>
+                      </Button>
+                    }
+                    body={<Row el={el}/>}
+                  />
+                ))
+              }
+            </View>
 
-        <TotalOrdersInfo/>
+            <TotalOrdersInfo/>
+            </>
+          :
+          <View style={{ alignItems: 'center'}}>
+            <Text style={{backgroundColor: 'white', padding: 20, marginTop: 20, borderRadius: 20}}>Order Payed</Text>
+          </View>
+        }
       </ScrollView>
     </SafeAreaView>
   )
@@ -110,6 +138,7 @@ const Cart = ({ orderList, subtotal, deleteItem, orderCountPlus, orderCountMinus
 const mapStateToProps = (state) => ({
   orderList: state.orderList,
   subtotal: state.orderTotal.subtotal,
+  isPayed: state.orderTotal.isPayed,
 })
 
 const mapDispatchToProps = (dispatch) => ({

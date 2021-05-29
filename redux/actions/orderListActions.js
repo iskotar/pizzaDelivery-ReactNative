@@ -55,6 +55,14 @@ export function estimateDelivery (destination) {
   }
 }
 
+export function payAndFinish (creditCard) {
+
+  return {
+    type: 'PAY_AND_FINISH',
+    payload: creditCard
+  }
+}
+
 export function getUserLocation () {
   return async (dispatch) => {
     let { status } = await Location.requestForegroundPermissionsAsync()

@@ -5,11 +5,24 @@ import { Ionicons } from '@expo/vector-icons'
 import MapViewDirections from 'react-native-maps-directions'
 import { GOOGLE_MAP_API_KEY } from '../constants'
 import { connect } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
 
 
-const DeliveryNav = ({ locations, orderList, orderTotal }) => {
-  const destinationAddress = orderTotal.destination.address
+const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
+  console.log(orderTotal)
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('DeliveryNav mounted')
+
+      return () => {
+        console.log('DeliveryNav UNmounted')
+      };
+    }, [navigation])
+  )
+
+  const destinationAddress = orderTotal.destination
   const restaurantsInOrder = orderList.map(({ restaurant }) => restaurant)
+
   const Restaurants = () => {
     return locations.restaurants.map(({ geometry, name, vicinity }, idx) => (
       <Marker
@@ -55,7 +68,7 @@ const DeliveryNav = ({ locations, orderList, orderTotal }) => {
     return (
       <MapViewDirections
         origin={orderList[0].address}
-        destination={destinationAddress.trim().length ? destinationAddress : locations.userLocation}
+        destination={destinationAddress ? destinationAddress.address : locations.userLocation}
         apikey={GOOGLE_MAP_API_KEY}
         strokeWidth={5}
         strokeColor='hotpink'

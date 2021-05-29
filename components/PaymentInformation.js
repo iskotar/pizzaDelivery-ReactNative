@@ -4,8 +4,9 @@ import { Item, Input, Label } from 'native-base'
 import { Entypo, Ionicons } from '@expo/vector-icons'
 import PrimarySubmitButton from './PrimarySubmitButton'
 import { connect } from 'react-redux'
+import { payAndFinish } from '../redux/actions/orderListActions'
 
-const PaymentInformation = ({ navigation, orderTotal }) => {
+const PaymentInformation = ({ navigation, orderTotal, payAndFinish }) => {
   const [formValue, setFormValue] = useState({})
   const inputs = ['First name', 'Last name', 'Card number', 'Exp. date', 'CVC Code']
   const total = orderTotal.subtotal + orderTotal.tax + orderTotal.deliveryPrice
@@ -16,6 +17,11 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
       [name]: val
     }
     setFormValue(newFormValue)
+  }
+
+  const onSubmit = () => {
+    payAndFinish(formValue)
+    navigation.navigate('Home', { screen: 'DeliveryNav' })
   }
 
   return (
@@ -74,7 +80,7 @@ const PaymentInformation = ({ navigation, orderTotal }) => {
         }
 
         <PrimarySubmitButton
-          onPress={() => navigation.navigate('Home', { screen: 'DeliveryNav' })}
+          onPress={onSubmit}
           children={<Entypo name='credit-card' size={30} color='white'/>}
           text='Pay'
         />
@@ -87,7 +93,11 @@ const mapStateToProps = (state) => ({
   orderTotal: state.orderTotal,
 })
 
-export default connect(mapStateToProps)(PaymentInformation)
+const mapDispatchToProps = (dispatch) => ({
+  payAndFinish: (creditCard) => dispatch(payAndFinish(creditCard)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentInformation)
 
 const styles = StyleSheet.create({
   topNav: {
