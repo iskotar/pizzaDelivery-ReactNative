@@ -103,7 +103,7 @@ export function getNearbyPlacesBySearchRequest () {
     const {latitude, longitude} = await dispatch(getUserLocation())
 
     const location = `location=${latitude},${longitude}`;
-    const radiusAndType = 'radius=1500&type=restaurant';
+    const radiusAndType = 'radius=3000&type=restaurant';
     const searchText = 'pizza restaurants';
     const queryParameters = `${location}&${radiusAndType}&keyword=${searchText}&key=${GOOGLE_MAP_API_KEY}`
 
