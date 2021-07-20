@@ -11,7 +11,6 @@ const initialState = {
   City: '',
   ZIP: '',
   Phone: '',
-  Email: '',
   error: false
 }
 
@@ -20,7 +19,7 @@ const DestinationAddress = ({ navigation, estimate }) => {
 
   useEffect(() => () => setState(initialState), [])
 
-  const inputs = ['Address', 'City', 'ZIP', 'Phone', 'Email']
+  const inputs = ['Address', 'City', 'ZIP', 'Phone']
 
   const onChangeValues = (val, name) => {
     setState({ ...state, [name]: val, error: false })
@@ -33,8 +32,7 @@ const DestinationAddress = ({ navigation, estimate }) => {
     if (isAllFieldsFiled) {
       const destination = {
         address: `${state.Address} ${state.City} ${state.ZIP}`.trim(),
-        phone: state.Phone,
-        email: state.Email
+        phone: state.Phone
       }
       estimate(destination)
       navigation.navigate('PaymentInformation')
