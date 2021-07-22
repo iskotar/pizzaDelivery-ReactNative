@@ -7,20 +7,19 @@ const DeliveryCar = ({ routePoints, onShowCallDialog, destinationAddress }) => {
 
   if (!destinationAddress) return null
 
-  const [curLoc, setCurLoc] = useState(routePoints[0])
-  const [idx, setIdx] = React.useState(0);
+  const [curLoc, setCurLoc] = useState(null)
+  const [idx, setIdx] = React.useState(0)
 
   useEffect(() => {
-    if(idx < routePoints.length) {
-      setTimeout(() => setIdx(idx + 1), 1000);
+    if (idx < routePoints.length) {
+      setTimeout(() => setIdx(idx + 1), 1000)
       setCurLoc(routePoints[idx])
+    } else {
+      if (routePoints.length) onShowCallDialog()
     }
-    else {
-      if(routePoints.length) onShowCallDialog()
-    }
-  },[idx, routePoints]);
+  }, [idx, routePoints])
 
-  return (
+  if (curLoc) return (
     <Marker
       title="Rajesh"
       coordinate={curLoc}
