@@ -34,7 +34,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.14.8",
     "@expo/vector-icons": "^12.0.5",
     "react-redux": "^7.2.4"
   },

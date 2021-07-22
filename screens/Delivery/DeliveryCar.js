@@ -23,7 +23,7 @@ const DeliveryCar = ({ routePoints, onShowCallDialog, destinationAddress }) => {
   return (
     <Marker
       title="Rajesh"
-      coordinate={curLoc && curLoc}
+      coordinate={curLoc}
     >
       <View
         style={styles.car}>
