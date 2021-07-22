@@ -5,7 +5,9 @@ import {
   decreaseOrderCount,
   deleteFromOrder,
   increaseOrderCount,
-  passOrderListToTotal, resetOrder, resetTotal
+  passOrderListToTotal,
+  resetOrder,
+  resetTotal
 } from '../redux/actions/orderListActions'
 import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'

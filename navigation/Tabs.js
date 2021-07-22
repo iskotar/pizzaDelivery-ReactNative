@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import DeliveryNav from '../screens/DeliveryNav'
+import DeliveryNav from '../screens/Delivery/DeliveryNav'
 import Cart from '../screens/Cart'
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Svg, { Path } from 'react-native-svg'
