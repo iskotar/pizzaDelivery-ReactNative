@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native'
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
 import { Entypo, Ionicons } from '@expo/vector-icons'
 import PrimarySubmitButton from './PrimarySubmitButton'
@@ -26,65 +26,69 @@ const PaymentInformation = ({ navigation, orderTotal, payAndFinish }) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.topNav}>
-        <Ionicons
-          name="md-chevron-back"
-          size={30}
-          onPress={() => navigation.goBack()}
-          color='grey'
-          style={styles.backArrow}
-        />
-        <Text style={styles.title}>Estimate and Pay</Text>
-      </View>
-
-      <View style={styles.infoContainer}>
-        <View style={styles.totalInfo}>
-          <View style={styles.infoSum}>
-            <Text>Sub Total:</Text>
-            <Text>Tax:</Text>
-            <Text>Delivery:</Text>
-            <Text style={styles.fontBold}>Total:</Text>
-          </View>
-
-          <View style={styles.infoSum}>
-            <Text>$ {orderTotal.subtotal.toFixed(2)}</Text>
-            <Text>$ {orderTotal.tax.toFixed(2)}</Text>
-            <Text>$ {orderTotal.deliveryPrice.toFixed(2)}</Text>
-            <Text style={styles.fontBold}>$ {total.toFixed(2)}</Text>
-          </View>
+      <KeyboardAvoidingView behavior="padding">
+      <ScrollView>
+        <View style={styles.topNav}>
+          <Ionicons
+            name="md-chevron-back"
+            size={30}
+            onPress={() => navigation.goBack()}
+            color='grey'
+            style={styles.backArrow}
+          />
+          <Text style={styles.title}>Estimate and Pay</Text>
         </View>
 
-        <Text style={styles.textBold}>Delivery Address:</Text>
-        <Text>{orderTotal.destination.address}</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.totalInfo}>
+            <View style={styles.infoSum}>
+              <Text>Sub Total:</Text>
+              <Text>Tax:</Text>
+              <Text>Delivery:</Text>
+              <Text style={styles.fontBold}>Total:</Text>
+            </View>
 
-        <Text style={styles.textBold}>Contacting Information:</Text>
-        <Text>{orderTotal.destination.email}</Text>
-        <Text>{orderTotal.destination.phone}</Text>
-      </View>
+            <View style={styles.infoSum}>
+              <Text>$ {orderTotal.subtotal.toFixed(2)}</Text>
+              <Text>$ {orderTotal.tax.toFixed(2)}</Text>
+              <Text>$ {orderTotal.deliveryPrice.toFixed(2)}</Text>
+              <Text style={styles.fontBold}>$ {total.toFixed(2)}</Text>
+            </View>
+          </View>
 
-      <View style={styles.list}>
-        {
-          inputs.map((name, idx) => (
-            <Item
-              floatingLabel
-              key={idx}
-              style={styles.input}
-            >
-              <Label>{name}</Label>
-              <Input
-                value={formValue.address}
-                onChangeText={(val) => val && onChangeValues(val, name)}
-              />
-            </Item>
-          ))
-        }
+          <Text style={styles.textBold}>Delivery Address:</Text>
+          <Text>{orderTotal.destination.address}</Text>
 
-        <PrimarySubmitButton
-          onPress={onSubmit}
-          children={<Entypo name='credit-card' size={30} color='white'/>}
-          text='Pay'
-        />
-      </View>
+          <Text style={styles.textBold}>Contacting Information:</Text>
+          <Text>{orderTotal.destination.email}</Text>
+          <Text>{orderTotal.destination.phone}</Text>
+        </View>
+
+        <View style={styles.list}>
+          {
+            inputs.map((name, idx) => (
+              <Item
+                floatingLabel
+                key={idx}
+                style={styles.input}
+              >
+                <Label>{name}</Label>
+                <Input
+                  value={formValue.address}
+                  onChangeText={(val) => val && onChangeValues(val, name)}
+                />
+              </Item>
+            ))
+          }
+
+          <PrimarySubmitButton
+            onPress={onSubmit}
+            children={<Entypo name='credit-card' size={30} color='white'/>}
+            text='Pay'
+          />
+        </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

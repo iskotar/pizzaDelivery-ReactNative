@@ -76,7 +76,7 @@ const Order = ({ addToOrderList, navigation, route }) => {
   return (
     <View style={styles.container}>
       <Header/>
-      <ScrollView style={{}}>
+      <ScrollView>
         <PizzaTypesList/>
       </ScrollView>
       <AppModal
