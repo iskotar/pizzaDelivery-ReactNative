@@ -34,7 +34,8 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
   const onDecline = () => {
     soundToPlay.unloadAsync()
     onShowCallDialog(false)
-    onShowFinishOrder()
+    if(isCallAccepted) onShowFinishOrder()
+    else setTimeout(() => onShowCallDialog(true),5000)
   }
 
   const onAccept = async () => {
