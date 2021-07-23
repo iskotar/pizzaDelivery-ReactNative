@@ -1,70 +1,91 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
 import { Audio } from 'expo-av'
 
-const IncomingCallDialog = ({ show, onHideCallDialog, driver, onShowFinishOrder }) => {
+const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder }) => {
 
   if (!show) return null
 
   const [soundToPlay, setSoundToPlay] = useState()
+  const [isCallAccepted, setTsCallAccepted] = useState(false)
 
   useEffect(() => {
     (async () => {
-      const { sound } = await Audio.Sound.createAsync(require('../../assets/ringtone.mp3'))
-      setSoundToPlay(sound)
-      await sound.playAsync()
-    })()
+      const soundObject = new Audio.Sound()
+      await soundObject.loadAsync(require('../../assets/ringtone.mp3'))
+      await soundObject.playAsync()
+      await setSoundToPlay(soundObject)
 
-    // return sound ? () => sound.unloadAsync() : undefined;
+      soundObject.setOnPlaybackStatusUpdate((status) => {
+        if (status.didJustFinish) {
+          soundObject.unloadAsync()
+          onShowCallDialog(false)
+
+          setTimeout(() => {
+            onShowCallDialog(true)
+          },3000)
+        }
+      })
+    })()
   }, [])
 
   const onDecline = () => {
     soundToPlay.unloadAsync()
-    onHideCallDialog()
+    onShowCallDialog(false)
     onShowFinishOrder()
   }
 
   const onAccept = async () => {
+    setTsCallAccepted(true)
     await soundToPlay.unloadAsync()
-    console.log('take')
-    const { sound } = await Audio.Sound.createAsync(require('../../assets/Ring.mp3'))
-    setSoundToPlay(sound)
-    await sound.playAsync()
+    await soundToPlay.loadAsync(require('../../assets/delivered.mp3'))
+    await soundToPlay.playAsync()
+
+    soundToPlay.setOnPlaybackStatusUpdate((status) => {
+      if (status.didJustFinish) {
+        soundToPlay.unloadAsync()
+        onDecline()
+      }
+    })
   }
 
   return (
-    <View
-      style={styles.backdrop}
-    >
+    <Modal>
+      <View
+        style={styles.backdrop}
+      >
 
-      <View style={styles.avatarContainer}>
-        <View
-          style={styles.avatar}
-        >
-          <Image source={driver.avatar}/>
+        <View style={styles.avatarContainer}>
+          <View
+            style={styles.avatar}
+          >
+            <Image source={driver.avatar}/>
+          </View>
+
+          <Text style={{ color: 'white', fontSize: 20 }}>
+            {driver.name} calling...
+          </Text>
         </View>
 
-        <Text style={{ color: 'white', fontSize: 20 }}>
-          {driver.name} calling...
-        </Text>
+        <View style={styles.buttonContainer}>
+
+          {
+            !isCallAccepted && <RoundButton
+              onPress={onAccept}
+              children={<Feather name="phone-call" size={30} color="white"/>}
+            />
+          }
+
+          <RoundButton
+            onPress={onDecline}
+            children={<Feather name="phone-off" size={30} color="white"/>}
+            backgroundColor='red'
+          />
+        </View>
       </View>
-
-      <View style={styles.buttonContainer}>
-
-        <RoundButton
-          onPress={onAccept}
-          children={<Feather name="phone-call" size={30} color="white"/>}
-        />
-
-        <RoundButton
-          onPress={onDecline}
-          children={<Feather name="phone-off" size={30} color="white"/>}
-          backgroundColor='red'
-        />
-      </View>
-    </View>
+    </Modal>
   )
 }
 
