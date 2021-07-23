@@ -12,12 +12,18 @@ const OutgoingCallDialog = ({ show, onHide, driver }) => {
 
   useEffect(() => {
     (async () => {
-      const { sound } = await Audio.Sound.createAsync(require('../../assets/ringback.mp3'))
-      setSoundToPlay(sound)
-      await sound.playAsync()
-    })()
+      const soundObject = new Audio.Sound()
+      await soundObject.loadAsync(require('../../assets/dialing.mp3'))
+      await soundObject.playAsync()
+      await setSoundToPlay(soundObject)
 
-    // return sound ? () => sound.unloadAsync() : undefined;
+      soundObject.setOnPlaybackStatusUpdate((status) => {
+        if (status.positionMillis >= 14000) {
+          soundObject.unloadAsync()
+          onHide()
+        }
+      })
+    })()
   }, [])
 
   const onDecline = () => {

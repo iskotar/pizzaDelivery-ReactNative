@@ -19,7 +19,9 @@ const DeliveryCar = ({ routePoints, onShowCallDialog, destinationAddress }) => {
     }
   }, [idx, routePoints])
 
-  if (curLoc) return (
+  if (!curLoc) return null;
+
+  return (
     <Marker
       title="Rajesh"
       coordinate={curLoc}
