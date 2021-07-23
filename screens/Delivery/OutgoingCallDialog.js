@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
 import { Audio } from 'expo-av'
@@ -12,14 +12,13 @@ const OutgoingCallDialog = ({ show, onHide, driver }) => {
 
   useEffect(() => {
     (async () => {
-      const soundObject = new Audio.Sound()
-      await soundObject.loadAsync(require('../../assets/dialing.mp3'))
-      await soundObject.playAsync()
-      await setSoundToPlay(soundObject)
+      const { sound } = await Audio.Sound.createAsync(require('../../assets/dialing.mp3'))
+      setSoundToPlay(sound)
+      await sound.playAsync()
 
-      soundObject.setOnPlaybackStatusUpdate((status) => {
+      sound.setOnPlaybackStatusUpdate((status) => {
         if (status.positionMillis >= 14000) {
-          soundObject.unloadAsync()
+          sound.unloadAsync()
           onHide()
         }
       })
@@ -32,30 +31,32 @@ const OutgoingCallDialog = ({ show, onHide, driver }) => {
   }
 
   return (
-    <View
-      style={styles.backdrop}
-    >
+    <Modal>
+      <View
+        style={styles.backdrop}
+      >
 
-      <View style={styles.avatarContainer}>
-        <View
-          style={styles.avatar}
-        >
-          <Image source={driver.avatar}/>
+        <View style={styles.avatarContainer}>
+          <View
+            style={styles.avatar}
+          >
+            <Image source={driver.avatar}/>
+          </View>
+
+          <Text style={{ color: 'white', fontSize: 20 }}>
+            Calling to {driver.name}...
+          </Text>
         </View>
 
-        <Text style={{ color: 'white', fontSize: 20 }}>
-          Calling to {driver.name}...
-        </Text>
+        <View style={styles.buttonContainer}>
+          <RoundButton
+            onPress={onDecline}
+            children={<Feather name="phone-off" size={30} color="white"/>}
+            backgroundColor='red'
+          />
+        </View>
       </View>
-
-      <View style={styles.buttonContainer}>
-        <RoundButton
-          onPress={onDecline}
-          children={<Feather name="phone-off" size={30} color="white"/>}
-          backgroundColor='red'
-        />
-      </View>
-    </View>
+    </Modal>
   )
 }
 

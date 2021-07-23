@@ -70,10 +70,11 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
         onShowDialDialog={() => setShowDialDialog(true)}
       />
       <IncomingCallDialog
-        show={showCallDialog}
-        onHideCallDialog={() => setShowCallDialog(false)}
+        show={!showDialDialog && showCallDialog}
+        onHideCallDialog={setShowCallDialog}
         driver={driver}
         onShowFinishOrder={() => setShowFinishOrder(true)}
+        onShowCallDialog={setShowCallDialog}
       />
       <OutgoingCallDialog
         show={showDialDialog}
