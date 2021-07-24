@@ -46,7 +46,7 @@ export const pizzaTypes = [
     basePrice: 8.0
   },
   {
-    name: 'Seven Types of Cheese',
+    name: 'Seven Cheeses',
     image: require('./assets/seven_types_of_cheese.jpg'),
     basePrice: 6.5
   },
