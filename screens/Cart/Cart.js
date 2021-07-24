@@ -8,11 +8,11 @@ import {
   passOrderListToTotal,
   resetOrder,
   resetTotal
-} from '../redux/actions/orderListActions'
+} from '../../redux/actions/orderListActions'
 import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'
-import PrimarySubmitButton from '../components/PrimarySubmitButton'
-import DestinationAddress from '../components/DestinationAddress'
+import PrimarySubmitButton from '../../components/PrimarySubmitButton'
+import DestinationAddress from './DestinationAddress'
 import { useFocusEffect } from '@react-navigation/native'
 
 const Cart = ({

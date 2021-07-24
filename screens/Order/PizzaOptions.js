@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { pizzaSizes } from '../constants'
-import pizza from '../assets/pizza.png'
+import { pizzaSizes } from '../../constants'
+import pizza from '../../assets/pizza.png'
 import { Slider } from 'react-native-elements'
 
 const PizzaOptions = ({ currentSelection, setOrder }) => {

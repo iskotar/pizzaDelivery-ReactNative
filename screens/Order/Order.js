@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { pizzaTypes } from '../constants'
-import PizzaOptions from '../components/PizzaOptions'
-import { AppModal } from '../components/AppModal'
+import { pizzaTypes } from '../../constants'
+import PizzaOptions from './PizzaOptions'
+import { AppModal } from '../../components/AppModal'
 import { connect } from 'react-redux'
-import { addToOrder } from '../redux/actions/orderListActions'
+import { addToOrder } from '../../redux/actions/orderListActions'
 
 const Order = ({ addToOrderList, navigation, route }) => {
   const [showOptions, setShowOptions] = useState(false)

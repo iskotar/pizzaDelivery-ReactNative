@@ -9,7 +9,7 @@ import {
   ImageBackground
 } from 'react-native'
 import { connect } from 'react-redux'
-import { GOOGLE_MAP_API_KEY } from '../constants'
+import { GOOGLE_MAP_API_KEY } from '../../constants'
 import { Entypo } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native';
 

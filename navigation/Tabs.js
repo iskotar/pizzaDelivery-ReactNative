@@ -1,13 +1,13 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DeliveryNav from '../screens/Delivery/DeliveryNav'
-import Cart from '../screens/Cart'
+import Cart from '../screens/Cart/Cart'
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Svg, { Path } from 'react-native-svg'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Badge } from 'react-native-elements'
 import { connect } from 'react-redux'
-import Pizzerias from '../screens/Pizzerias'
+import Pizzerias from '../screens/Pizzerias/Pizzerias'
 
 const Tab = createBottomTabNavigator()
 

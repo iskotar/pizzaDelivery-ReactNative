@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
 import { Entypo, Ionicons } from '@expo/vector-icons'
-import PrimarySubmitButton from './PrimarySubmitButton'
+import PrimarySubmitButton from '../../components/PrimarySubmitButton'
 import { connect } from 'react-redux'
-import { estimateDelivery } from '../redux/actions/orderListActions'
+import { estimateDelivery } from '../../redux/actions/orderListActions'
 
 const initialState = {
   Address: '',

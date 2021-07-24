@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { Item, Input, Label } from 'native-base'
 import { Entypo, Ionicons } from '@expo/vector-icons'
-import PrimarySubmitButton from './PrimarySubmitButton'
+import PrimarySubmitButton from '../../components/PrimarySubmitButton'
 import { connect } from 'react-redux'
-import { payAndFinish } from '../redux/actions/orderListActions'
+import { payAndFinish } from '../../redux/actions/orderListActions'
 
 const PaymentInformation = ({ navigation, orderTotal, payAndFinish }) => {
   const [formValue, setFormValue] = useState({})

@@ -4,12 +4,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import Tabs from './navigation/Tabs'
 import { Provider } from 'react-redux'
 import store from './redux/store'
-import DestinationAddress from './components/DestinationAddress'
-import PaymentInformation from './components/PaymentInformation'
+import DestinationAddress from './screens/Cart/DestinationAddress'
+import PaymentInformation from './screens/Cart/PaymentInformation'
 import DeliveryNav from './screens/Delivery/DeliveryNav'
-import Order from './screens/Order'
+import Order from './screens/Order/Order'
 import LocationLayout from './layouts/LocationLayout'
-import Cart from './screens/Cart'
+import Cart from './screens/Cart/Cart'
 
 const Stack = createStackNavigator()
 
