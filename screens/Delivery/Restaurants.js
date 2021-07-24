@@ -1,6 +1,6 @@
 import React from 'react'
 import { Marker } from 'react-native-maps'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 const Restaurants = ({ isHidden, locations }) => {
@@ -16,7 +16,7 @@ const Restaurants = ({ isHidden, locations }) => {
       title={vicinity}
     >
       <View
-        style={{ borderRadius: 25, borderWidth: 1, borderColor: '#adcd34', backgroundColor: 'white', padding: 5 }}>
+        style={styles.iconContainer}>
         <Ionicons name="pizza" size={25} color='black'/>
       </View>
     </Marker>
@@ -24,3 +24,13 @@ const Restaurants = ({ isHidden, locations }) => {
 }
 
 export default Restaurants
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#adcd34',
+    backgroundColor: 'white',
+    padding: 5
+  }
+})
