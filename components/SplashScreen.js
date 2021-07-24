@@ -7,8 +7,8 @@ const SplashScreen = () => {
   return (
     <View style={styles.body}>
 
-      <Text style={}>Zae</Text>
-      <Text style={}>PiZZA</Text>
+      <Text style={styles.name1}>Zae</Text>
+      <Text style={styles.name2}>PiZZA</Text>
       <Ionicons name="pizza" size={150} color='white'/>
     </View>
   )
