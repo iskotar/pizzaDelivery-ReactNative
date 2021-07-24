@@ -30,7 +30,7 @@ export const AppModal = ({ onShow, onSubmit, onClose, children, submitBtnName })
 
 const styles = StyleSheet.create({
   modalView: {
-    marginVertical: 50,
+    marginVertical: '8%',
     padding: 10,
     flex: 1,
     backgroundColor: 'white',
