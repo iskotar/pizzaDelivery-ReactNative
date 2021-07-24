@@ -26,7 +26,7 @@ const PaymentInformation = ({ navigation, orderTotal, payAndFinish }) => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={40}>
       <ScrollView>
         <View style={styles.topNav}>
           <Ionicons
