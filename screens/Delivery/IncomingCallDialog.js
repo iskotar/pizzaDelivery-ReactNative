@@ -9,7 +9,7 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
   if (!show) return null
 
   const [soundToPlay, setSoundToPlay] = useState()
-  const [isCallAccepted, setTsCallAccepted] = useState(false)
+  const [isCallAccepted, setIsCallAccepted] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -31,22 +31,24 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
     })()
   }, [])
 
+  useEffect(() => {
+    if(isCallAccepted) onShowFinishOrder()
+    else setTimeout(() => onShowCallDialog(true),5000)
+  },[isCallAccepted])
+
   const onDecline = () => {
     soundToPlay.unloadAsync()
     onShowCallDialog(false)
-    if(isCallAccepted) onShowFinishOrder()
-    else setTimeout(() => onShowCallDialog(true),5000)
   }
 
   const onAccept = async () => {
-    setTsCallAccepted(true)
+    setIsCallAccepted(true)
     await soundToPlay.unloadAsync()
     await soundToPlay.loadAsync(require('../../assets/delivered.mp3'))
     await soundToPlay.playAsync()
 
     soundToPlay.setOnPlaybackStatusUpdate((status) => {
       if (status.didJustFinish) {
-        soundToPlay.unloadAsync()
         onDecline()
       }
     })
