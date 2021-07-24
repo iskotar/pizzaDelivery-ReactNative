@@ -59,7 +59,7 @@ const Tabs = ({ orderList }) => {
   }
 
   return (
-    <>
+    <View style={{width: '100%', height: '100%'}}>
       <Tab.Navigator
         tabBarOptions={{
           showLabel: false,
@@ -69,7 +69,8 @@ const Tabs = ({ orderList }) => {
             elevation: 0,
             bottom: 0,
             position: 'absolute',
-            zIndex: 1
+            zIndex: 1,
+            height: 80
           }
         }}
       >
@@ -110,8 +111,8 @@ const Tabs = ({ orderList }) => {
           }}
         />
       </Tab.Navigator>
-      <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, height: 40, width: '100%', zIndex: 0 }}/>
-    </>
+      <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, height: 30, width: '100%', zIndex: 0 }}/>
+    </View>
   )
 }
 
