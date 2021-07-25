@@ -29,6 +29,7 @@ const PizzaOptions = ({ currentSelection, setOrder }) => {
       style={styles.content}
       ref={(scrollView) => scrollView && scrollView.flashScrollIndicators()}
       scrollIndicatorInsets={{ right: -3 }}
+      indicatorStyle='black'
     >
       <Text style={styles.title}>{currentSelection.name}</Text>
 
