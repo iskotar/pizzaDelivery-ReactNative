@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Image, Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { pizzaSizes } from '../../constants'
 import pizza from '../../assets/pizza.png'
@@ -25,7 +25,11 @@ const PizzaOptions = ({ currentSelection, setOrder }) => {
   }
 
   return (
-    <View style={styles.content}>
+    <ScrollView
+      style={styles.content}
+      ref={(scrollView) => scrollView && scrollView.flashScrollIndicators()}
+      scrollIndicatorInsets={{ right: -3 }}
+    >
       <Text style={styles.title}>{currentSelection.name}</Text>
 
       <Image source={currentSelection.image} style={styles.image}/>
@@ -86,7 +90,7 @@ const PizzaOptions = ({ currentSelection, setOrder }) => {
         <Text style={styles.cheeseLvlFont}>{selectedCheese.lvl}</Text>
       </View>
 
-    </View>
+    </ScrollView>
   )
 }
 

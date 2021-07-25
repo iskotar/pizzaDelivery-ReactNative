@@ -7,22 +7,21 @@ export const AppModal = ({ onShow, onSubmit, onClose, children, submitBtnName })
   return (
     <Modal
       animationType="slide"
-      transparent={true}
       visible={onShow}
     >
       <View style={styles.modalView}>
-        <Pressable style={styles.closeBtn} onPress={onClose}>
-          <Entypo name='cross' size={40} color='#adcd34'/>
-        </Pressable>
-        {children}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={onSubmit}
-        >
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
-            {submitBtnName}
-          </Text>
-        </TouchableOpacity>
+      <Pressable style={styles.closeBtn} onPress={onClose}>
+        <Entypo name='cross' size={40} color='#adcd34'/>
+      </Pressable>
+      {children}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onSubmit}
+      >
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+          {submitBtnName}
+        </Text>
+      </TouchableOpacity>
       </View>
     </Modal>
   )
@@ -30,8 +29,8 @@ export const AppModal = ({ onShow, onSubmit, onClose, children, submitBtnName })
 
 const styles = StyleSheet.create({
   modalView: {
-    marginVertical: '8%',
-    padding: 10,
+    marginTop: '8%',
+    padding: 15,
     flex: 1,
     backgroundColor: 'white',
     borderRadius: 20,
