@@ -65,20 +65,16 @@ export default OutgoingCallDialog
 const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: 'rgba(21,21,21,0.94)',
-    width: '100%',
-    height: '100%',
+    flex: 1,
+    justifyContent: 'space-around'
   },
 
   buttonContainer: {
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: 150,
+    alignItems: 'center'
   },
 
   avatarContainer: {
-    top: 200,
     alignItems: 'center'
   },
 
