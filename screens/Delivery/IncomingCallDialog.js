@@ -25,18 +25,21 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
 
           setTimeout(() => {
             onShowCallDialog(true)
-          },3000)
+          }, 3000)
         }
       })
     })()
   }, [])
 
-  useEffect(() => {
-    if(isCallAccepted) onShowFinishOrder()
-    else setTimeout(() => onShowCallDialog(true),5000)
-  },[isCallAccepted])
+  let timeoutId;
 
   const onDecline = () => {
+    if (isCallAccepted) {
+      clearTimeout(timeoutId)
+      onShowFinishOrder()
+    } else {
+      timeoutId = setTimeout(() => onShowCallDialog(true), 5000)
+    }
     soundToPlay.unloadAsync()
     onShowCallDialog(false)
   }
