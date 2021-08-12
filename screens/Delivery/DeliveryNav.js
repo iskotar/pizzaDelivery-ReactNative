@@ -71,8 +71,8 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
         style={styles.cardContainer}
       >
         <View style={styles.cardTitle}>
-          <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
-          <Text style={styles.cardAddress} numberOfLines={1}>{item.vicinity}</Text>
+          <Text style={[styles.cardName, styles.whiteBoldText]} numberOfLines={1}>{item.name}</Text>
+          <Text style={styles.whiteBoldText} numberOfLines={1}>{item.vicinity}</Text>
         </View>
         <Image
           style={styles.cardImage}
@@ -81,7 +81,7 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
           }}
         />
         <Text
-          style={styles.cardButton}
+          style={[styles.cardButton, styles.whiteBoldText]}
           onPress={() => navigation.navigate('Order', { vicinity: item.vicinity })}
         >
           TAP TO ORDER
@@ -178,16 +178,14 @@ const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    padding: 5,
+    padding: 5
   },
 
   cardName: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold'
+    fontSize: 20
   },
 
-  cardAddress: {
+  whiteBoldText: {
     color: 'white',
     fontWeight: 'bold'
   },
@@ -197,8 +195,6 @@ const styles = StyleSheet.create({
   },
 
   cardButton: {
-    color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
     padding: 5
   },
