@@ -64,6 +64,7 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   }
 
   const cardItem = ({ item }) => {
+    if (destinationAddress) return null;
 
     return (
       <View
@@ -83,7 +84,7 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
           style={styles.cardButton}
           onPress={() => navigation.navigate('Order', { vicinity: item.vicinity })}
         >
-          CLICK TO ORDER
+          TAP TO ORDER
         </Text>
       </View>
     )
