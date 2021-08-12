@@ -15,7 +15,7 @@ const Restaurants = ({ isHidden, locations, onSelectMarker, selectedMarker }) =>
         latitude: geometry.location.lat
       }}
       onPress={() => onSelectMarker(idx)}
-      style={{ zIndex: idx === selectedMarker && 1 }}
+      style={{ zIndex: idx === selectedMarker ? 1 : 0 }}
     >
       <View
         style={[styles.iconContainer, { borderRadius: isMarkerSelected }]}>
