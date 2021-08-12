@@ -10,12 +10,17 @@ const DeliveryCar = ({ routePoints, onShowCallDialog, destinationAddress }) => {
   const [curLoc, setCurLoc] = useState(null)
   const [idx, setIdx] = React.useState(0)
 
+  let timeoutID;
+
   useEffect(() => {
     if (idx < routePoints.length) {
-      setTimeout(() => setIdx(idx + 1), 1000)
+      timeoutID = setTimeout(() => setIdx(idx + 1), 1000)
       setCurLoc(routePoints[idx])
     } else {
-      if (routePoints.length) onShowCallDialog()
+      if (routePoints.length) {
+        clearTimeout(timeoutID)
+        onShowCallDialog()
+      }
     }
   }, [idx, routePoints])
 
