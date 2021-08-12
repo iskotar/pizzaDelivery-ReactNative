@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
@@ -10,12 +10,17 @@ import DeliveryCar from './DeliveryCar'
 import DelivererInfo from './DelivererInfo'
 import OutgoingCallDialog from './OutgoingCallDialog'
 import FinishOrder from './FinishOrder'
+import Carousel from 'react-native-snap-carousel'
+import { GOOGLE_MAP_API_KEY } from '../../constants'
 
 const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   const [showCallDialog, setShowCallDialog] = useState(false)
   const [showDialDialog, setShowDialDialog] = useState(false)
   const [showFinishOrder, setShowFinishOrder] = useState(false)
   const [routePoints, setRoutePoints] = useState([])
+  const [selectedMarker, setSelectedMarker] = useState(0)
+  const _carouselRef = React.useRef()
+  const _mapRef = React.useRef()
 
   const driver = {
     name: 'Dinesh',
@@ -23,7 +28,7 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   }
 
   const destinationAddress = (() => {
-    if(orderTotal.isPayed) return orderTotal.destination.address.trim() || locations.userLocation
+    if (orderTotal.isPayed) return orderTotal.destination.address.trim() || locations.userLocation
   })()
 
   useFocusEffect(
@@ -37,20 +42,68 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   )
 
   useEffect(() => {
-    if(!destinationAddress) setRoutePoints([])
-  },[destinationAddress])
+    if (!destinationAddress) setRoutePoints([])
+  }, [destinationAddress])
+
+  const onCarouselItemChange = (idx) => {
+    let loc = locations.restaurants[idx].geometry.location
+
+    _mapRef.current.animateToRegion({
+      latitude: loc.lat,
+      longitude: loc.lng,
+      latitudeDelta: 0.09,
+      longitudeDelta: 0.035
+    })
+
+    setSelectedMarker(idx)
+  }
+
+  const onSelectMarker = (idx) => {
+    setSelectedMarker(idx)
+    _carouselRef.current.snapToItem(idx)
+  }
+
+  const cardItem = ({ item }) => {
+
+    return (
+      <View
+        style={styles.cardContainer}
+      >
+        <View style={styles.cardTitle}>
+          <Text style={styles.cardName}>{item.name}</Text>
+          <Text style={styles.cardAddress}>{item.vicinity}</Text>
+        </View>
+        <Image
+          style={styles.cardImage}
+          source={{
+            uri: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${item.photos[0].photo_reference}&maxheight=500&maxwidth=500&key=${GOOGLE_MAP_API_KEY}`
+          }}
+        />
+        <Text
+          style={styles.cardButton}
+          onPress={() => navigation.navigate('Order', { vicinity: item.vicinity })}
+        >
+          CLICK TO ORDER
+        </Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
       <MapView
+        ref={_mapRef}
         style={styles.mapStyle}
         provider={PROVIDER_GOOGLE}
         initialRegion={locations.userLocation}
         showsUserLocation
+        getMarkersFrames
       >
         <Restaurants
           isHidden={destinationAddress}
           locations={locations}
+          onSelectMarker={onSelectMarker}
+          selectedMarker={selectedMarker}
         />
         <Route
           orderList={orderList}
@@ -63,6 +116,16 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
           onShowCallDialog={() => setShowCallDialog(true)}
         />
       </MapView>
+
+      <Carousel
+        ref={_carouselRef}
+        data={locations.restaurants}
+        renderItem={cardItem}
+        onSnapToItem={onCarouselItemChange}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={320}
+        containerCustomStyle={styles.carousel}
+      />
 
       <DelivererInfo
         isHidden={!destinationAddress}
@@ -105,4 +168,43 @@ const styles = StyleSheet.create({
   mapStyle: {
     flex: 1
   },
+
+  cardContainer: {
+    backgroundColor: '#adcd34',
+    borderRadius: 10,
+    height: 200,
+    overflow: 'hidden'
+  },
+
+  cardTitle: {
+    padding: 5,
+  },
+
+  cardName: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold'
+  },
+
+  cardAddress: {
+    color: 'white',
+    fontWeight: 'bold'
+  },
+
+  cardImage: {
+    height: '60%'
+  },
+
+  cardButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 5
+  },
+
+  carousel: {
+    position: 'absolute',
+    bottom: 110,
+    width: '100%'
+  }
 })
