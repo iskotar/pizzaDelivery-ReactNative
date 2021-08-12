@@ -71,8 +71,8 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
         style={styles.cardContainer}
       >
         <View style={styles.cardTitle}>
-          <Text style={styles.cardName}>{item.name}</Text>
-          <Text style={styles.cardAddress}>{item.vicinity}</Text>
+          <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
+          <Text style={styles.cardAddress} numberOfLines={1}>{item.vicinity}</Text>
         </View>
         <Image
           style={styles.cardImage}
