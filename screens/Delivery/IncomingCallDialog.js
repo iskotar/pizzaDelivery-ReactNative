@@ -31,17 +31,20 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
     })()
   }, [])
 
-  let timeoutId;
+  useEffect(() => {
+    if (isCallAccepted) {
+      soundToPlay.setOnPlaybackStatusUpdate((status) => {
+        if (status.didJustFinish) onDecline()
+      })
+    }
+  },[isCallAccepted])
 
   const onDecline = () => {
-    if (isCallAccepted) {
-      clearTimeout(timeoutId)
-      onShowFinishOrder()
-    } else {
-      timeoutId = setTimeout(() => onShowCallDialog(true), 5000)
-    }
     soundToPlay.unloadAsync()
     onShowCallDialog(false)
+
+    if (isCallAccepted) onShowFinishOrder()
+    else setTimeout(() => onShowCallDialog(true), 5000)
   }
 
   const onAccept = async () => {
@@ -49,12 +52,6 @@ const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder 
     await soundToPlay.unloadAsync()
     await soundToPlay.loadAsync(require('../../assets/delivered.mp3'))
     await soundToPlay.playAsync()
-
-    soundToPlay.setOnPlaybackStatusUpdate((status) => {
-      if (status.didJustFinish) {
-        onDecline()
-      }
-    })
   }
 
   return (
