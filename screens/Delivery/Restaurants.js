@@ -7,7 +7,8 @@ const Restaurants = ({ isHidden, locations, onSelectMarker, selectedMarker }) =>
   if (isHidden) return null
 
   return locations.restaurants.map(({ geometry }, idx) => {
-    const isMarkerSelected = idx === selectedMarker ? 50 : 25;
+    const isMarkerSelected = idx === selectedMarker
+
     return <Marker
       key={idx}
       coordinate={{
@@ -15,11 +16,11 @@ const Restaurants = ({ isHidden, locations, onSelectMarker, selectedMarker }) =>
         latitude: geometry.location.lat
       }}
       onPress={() => onSelectMarker(idx)}
-      style={{ zIndex: idx === selectedMarker ? 1 : 0 }}
+      style={isMarkerSelected && { zIndex: 1 }}
     >
       <View
-        style={[styles.iconContainer, { borderRadius: isMarkerSelected }]}>
-        <Ionicons name="pizza" size={isMarkerSelected} color='black'/>
+        style={[styles.iconContainer, isMarkerSelected && { backgroundColor: '#adcd34'}]}>
+        <Ionicons name="pizza" size={25} color={'black'}/>
       </View>
     </Marker>
   })
@@ -30,6 +31,7 @@ export default Restaurants
 const styles = StyleSheet.create({
   iconContainer: {
     borderWidth: 1,
+    borderRadius: 25,
     borderColor: '#adcd34',
     backgroundColor: 'white',
     padding: 5

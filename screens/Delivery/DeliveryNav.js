@@ -171,32 +171,37 @@ const styles = StyleSheet.create({
   },
 
   cardContainer: {
-    backgroundColor: '#adcd34',
+    backgroundColor: 'white',
     borderRadius: 10,
     height: 200,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderColor: '#adcd34',
+    borderWidth: 1
   },
 
   cardTitle: {
-    padding: 5
+    padding: 5,
+    height: 50
   },
 
   cardName: {
-    fontSize: 20
+    fontSize: 18
   },
 
   whiteBoldText: {
-    color: 'white',
-    fontWeight: 'bold'
+    fontWeight: '500'
   },
 
   cardImage: {
-    height: '60%'
+    height: 120
   },
 
   cardButton: {
     textAlign: 'center',
-    padding: 5
+    padding: 5,
+    height: 30,
+    color: 'white',
+    backgroundColor: '#adcd34',
   },
 
   carousel: {
