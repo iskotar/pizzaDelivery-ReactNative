@@ -13,7 +13,7 @@ import { Icon, SwipeRow, Button } from 'native-base'
 import { Entypo } from '@expo/vector-icons'
 import PrimarySubmitButton from '../../components/PrimarySubmitButton'
 import DestinationAddress from './DestinationAddress'
-import { useFocusEffect } from '@react-navigation/native'
+
 
 const Cart = ({
                 orderList,
@@ -27,16 +27,6 @@ const Cart = ({
                 resetTotal,
                 resetOrder
               }) => {
-
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log('Cart mounted')
-
-      return () => {
-        console.log('Cart UNmounted')
-      };
-    }, [navigation])
-  )
 
   useEffect(() => {
     passOrdersToTotal()

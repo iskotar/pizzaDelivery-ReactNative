@@ -3,8 +3,9 @@ import { View, Text, Image, StyleSheet, Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
 import { Audio } from 'expo-av'
+import { driver } from '../../constants'
 
-const IncomingCallDialog = ({ show, onShowCallDialog, driver, onShowFinishOrder }) => {
+const IncomingCallDialog = ({ show, onShowCallDialog, onShowFinishOrder }) => {
 
   if (!show) return null
 

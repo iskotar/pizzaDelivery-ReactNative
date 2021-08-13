@@ -2,13 +2,10 @@ import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
+import { driver } from '../../constants'
 
-const DelivererInfo = ({ isHidden, driver, onShowDialDialog }) => {
+const DelivererInfo = ({ isHidden, onShowDialDialog }) => {
   if (isHidden) return null
-
-  const onCall = () => {
-    onShowDialDialog()
-  }
 
   return (
     <View style={styles.body}>
@@ -28,7 +25,7 @@ const DelivererInfo = ({ isHidden, driver, onShowDialDialog }) => {
         </View>
 
         <RoundButton
-          onPress={onCall}
+          onPress={onShowDialDialog}
           size={60}
           children={
             <Feather name="phone" size={35} color="white"/>

@@ -11,19 +11,8 @@ import {
 import { connect } from 'react-redux'
 import { GOOGLE_MAP_API_KEY } from '../../constants'
 import { Entypo } from '@expo/vector-icons'
-import { useFocusEffect } from '@react-navigation/native';
 
 const Pizzerias = ({ navigation, restaurants }) => {
-
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log('Pizzerias mounted')
-
-      return () => {
-        console.log('Pizzerias UNmounted')
-      };
-    }, [navigation])
-  )
 
   const List = () => {
 

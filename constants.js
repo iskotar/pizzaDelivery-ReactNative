@@ -56,3 +56,8 @@ export const pizzaTypes = [
     basePrice: 7.0
   }
 ]
+
+export const driver = {
+  name: 'Dinesh',
+  avatar: require('./assets/dinesh.jpeg')
+}

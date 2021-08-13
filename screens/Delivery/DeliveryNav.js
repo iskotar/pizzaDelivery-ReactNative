@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { connect } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
 import Restaurants from './Restaurants'
 import Route from './Route'
 import IncomingCallDialog from './IncomingCallDialog'
@@ -22,24 +21,9 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   const _carouselRef = React.useRef()
   const _mapRef = React.useRef()
 
-  const driver = {
-    name: 'Dinesh',
-    avatar: require('../../assets/dinesh.jpeg')
-  }
-
   const destinationAddress = (() => {
     if (orderTotal.isPayed) return orderTotal.destination.address.trim() || locations.userLocation
   })()
-
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log('DeliveryNav mounted')
-
-      return () => {
-        console.log('DeliveryNav UNmounted')
-      }
-    }, [navigation])
-  )
 
   useEffect(() => {
     if (!destinationAddress) setRoutePoints([])
@@ -130,20 +114,17 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
 
       <DelivererInfo
         isHidden={!destinationAddress}
-        driver={driver}
         onShowDialDialog={() => setShowDialDialog(true)}
       />
       <IncomingCallDialog
         show={!showDialDialog && showCallDialog}
         onHideCallDialog={setShowCallDialog}
-        driver={driver}
         onShowFinishOrder={() => setShowFinishOrder(true)}
         onShowCallDialog={setShowCallDialog}
       />
       <OutgoingCallDialog
         show={showDialDialog}
         onHide={() => setShowDialDialog(false)}
-        driver={driver}
       />
       <FinishOrder
         show={showFinishOrder}
