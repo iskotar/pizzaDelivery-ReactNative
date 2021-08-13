@@ -6,8 +6,9 @@ import PizzaOptions from './PizzaOptions'
 import { AppModal } from '../../components/AppModal'
 import { connect } from 'react-redux'
 import { addToOrder } from '../../redux/actions/orderListActions'
+import { Badge } from 'react-native-elements'
 
-const Order = ({ addToOrderList, navigation, route }) => {
+const Order = ({ addToOrderList, orderList, navigation, route }) => {
   const [showOptions, setShowOptions] = useState(false)
   const [currentSelection, setCurrentSelection] = useState()
   const [order, setOrder] = useState({})
@@ -25,7 +26,7 @@ const Order = ({ addToOrderList, navigation, route }) => {
     setCurrentSelection(pizza)
     setShowOptions(true)
   }
-
+  console.log(orderList)
   const Header = () => {
     return (
       <View style={styles.header}>
@@ -42,6 +43,12 @@ const Order = ({ addToOrderList, navigation, route }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Home', { screen: 'Cart' })}
         >
+          {orderList.length ?
+            <Badge
+              value={orderList.length}
+              textStyle={{ color: 'black' }}
+              badgeStyle={styles.badge}
+            /> : null}
           <MaterialCommunityIcons name="cart" size={30} color={'white'}/>
         </TouchableOpacity>
       </View>
@@ -91,11 +98,15 @@ const Order = ({ addToOrderList, navigation, route }) => {
   )
 }
 
+const mapStateToProps = (state) => ({
+  orderList: state.orderList,
+})
+
 const mapDispatchToProps = (dispatch) => ({
   addToOrderList: (item) => dispatch(addToOrder(item)),
 })
 
-export default connect(null, mapDispatchToProps)(Order)
+export default connect(mapStateToProps, mapDispatchToProps)(Order)
 
 const styles = StyleSheet.create({
   container: {
@@ -160,5 +171,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderColor: '#adcd34',
     borderWidth: 5
+  },
+
+  badge: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    right: -10,
+    top: -10,
   }
 })
