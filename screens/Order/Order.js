@@ -26,7 +26,7 @@ const Order = ({ addToOrderList, orderList, navigation, route }) => {
     setCurrentSelection(pizza)
     setShowOptions(true)
   }
-  console.log(orderList)
+
   const Header = () => {
     return (
       <View style={styles.header}>
