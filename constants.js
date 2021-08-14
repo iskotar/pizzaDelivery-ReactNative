@@ -57,7 +57,21 @@ export const pizzaTypes = [
   }
 ]
 
-export const driver = {
-  name: 'Dinesh',
-  avatar: require('./assets/dinesh.jpeg')
-}
+export const drivers = [
+  {
+    name: 'Dinesh',
+    avatar: require('./assets/dinesh.jpeg'),
+    voice: {
+      onMayWay: require('./assets/dinesh-onmyway.mp3'),
+      delivered: require('./assets/dinesh-delivered.mp3')
+    }
+  },
+  {
+    name: 'Gilfoyle',
+    avatar: require('./assets/gilfoyle.jpg'),
+    voice: {
+      onMayWay: require('./assets/gilfoyle-onmyway.mp3'),
+      delivered: require('./assets/gilfoyle-delivered.mp3')
+    }
+  }
+]

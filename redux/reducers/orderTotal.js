@@ -1,9 +1,12 @@
+import { drivers } from '../../constants'
+
 const initialState = {
   subtotal: 0,
   tax: 0,
   deliveryPrice: 0,
   isPayed: false,
-  destination: null
+  destination: null,
+  driver: drivers[Math.floor(Math.random() * 2)]
 }
 
 export default function orderTotal(state = initialState, action) {
@@ -29,7 +32,8 @@ export default function orderTotal(state = initialState, action) {
       return {
         ...state,
         creditCard: action.payload,
-        isPayed: true
+        isPayed: true,
+        driver: drivers[Math.floor(Math.random() * 2)]
       }
 
     case 'RESET_TOTAL':

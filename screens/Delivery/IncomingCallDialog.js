@@ -3,9 +3,9 @@ import { View, Text, Image, StyleSheet, Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
 import { Audio } from 'expo-av'
-import { driver } from '../../constants'
 
-const IncomingCallDialog = ({ show, onShowCallDialog, onShowFinishOrder }) => {
+
+const IncomingCallDialog = ({ show, onShowCallDialog, onShowFinishOrder, driver }) => {
 
   if (!show) return null
 
@@ -51,7 +51,7 @@ const IncomingCallDialog = ({ show, onShowCallDialog, onShowFinishOrder }) => {
   const onAccept = async () => {
     setIsCallAccepted(true)
     await soundToPlay.unloadAsync()
-    await soundToPlay.loadAsync(require('../../assets/delivered.mp3'))
+    await soundToPlay.loadAsync(driver.voice.delivered)
     await soundToPlay.playAsync()
   }
 

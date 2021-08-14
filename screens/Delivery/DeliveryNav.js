@@ -10,7 +10,10 @@ import DelivererInfo from './DelivererInfo'
 import OutgoingCallDialog from './OutgoingCallDialog'
 import FinishOrder from './FinishOrder'
 import Carousel from 'react-native-snap-carousel'
-import { GOOGLE_MAP_API_KEY } from '../../constants'
+import { GOOGLE_MAP_API_KEY, drivers } from '../../constants'
+
+// const driver = drivers[Math.floor(Math.random() * 2)]
+
 
 const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
   const [showCallDialog, setShowCallDialog] = useState(false)
@@ -115,16 +118,19 @@ const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {
       <DelivererInfo
         isHidden={!destinationAddress}
         onShowDialDialog={() => setShowDialDialog(true)}
+        driver={orderTotal.driver}
       />
       <IncomingCallDialog
         show={!showDialDialog && showCallDialog}
         onHideCallDialog={setShowCallDialog}
         onShowFinishOrder={() => setShowFinishOrder(true)}
         onShowCallDialog={setShowCallDialog}
+        driver={orderTotal.driver}
       />
       <OutgoingCallDialog
         show={showDialDialog}
         onHide={() => setShowDialDialog(false)}
+        driver={orderTotal.driver}
       />
       <FinishOrder
         show={showFinishOrder}

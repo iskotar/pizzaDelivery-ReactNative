@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Image, Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
 import { Audio } from 'expo-av'
-import { driver } from '../../constants'
 
-const OutgoingCallDialog = ({ show, onHide }) => {
+
+const OutgoingCallDialog = ({ show, onHide, driver }) => {
 
   if (!show) return null
 
@@ -13,7 +13,7 @@ const OutgoingCallDialog = ({ show, onHide }) => {
 
   useEffect(() => {
     (async () => {
-      const { sound } = await Audio.Sound.createAsync(require('../../assets/dialing.mp3'))
+      const { sound } = await Audio.Sound.createAsync(driver.voice.onMayWay)
       setSoundToPlay(sound)
       await sound.playAsync()
 

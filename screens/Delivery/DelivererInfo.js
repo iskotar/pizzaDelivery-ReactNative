@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RoundButton from '../../components/RoundButton'
-import { driver } from '../../constants'
 
-const DelivererInfo = ({ isHidden, onShowDialDialog }) => {
+
+const DelivererInfo = ({ isHidden, onShowDialDialog, driver }) => {
   if (isHidden) return null
 
   return (
