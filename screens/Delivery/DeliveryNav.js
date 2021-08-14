@@ -10,9 +10,7 @@ import DelivererInfo from './DelivererInfo'
 import OutgoingCallDialog from './OutgoingCallDialog'
 import FinishOrder from './FinishOrder'
 import Carousel from 'react-native-snap-carousel'
-import { GOOGLE_MAP_API_KEY, drivers } from '../../constants'
-
-// const driver = drivers[Math.floor(Math.random() * 2)]
+import { GOOGLE_MAP_API_KEY } from '../../constants'
 
 
 const DeliveryNav = ({ locations, orderList, orderTotal, navigation }) => {

@@ -6,7 +6,7 @@ const initialState = {
   deliveryPrice: 0,
   isPayed: false,
   destination: null,
-  driver: drivers[Math.floor(Math.random() * 2)]
+  driver: drivers[0]
 }
 
 export default function orderTotal(state = initialState, action) {

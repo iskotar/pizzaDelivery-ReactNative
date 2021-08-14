@@ -18,7 +18,8 @@ const OutgoingCallDialog = ({ show, onHide, driver }) => {
       await sound.playAsync()
 
       sound.setOnPlaybackStatusUpdate((status) => {
-        if (status.positionMillis >= 14000) {
+        console.log(status.positionMillis)
+        if (status.didJustFinish) {
           sound.unloadAsync()
           onHide()
         }
