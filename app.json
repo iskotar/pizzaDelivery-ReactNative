@@ -20,7 +20,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.delivery.ios",
       "config": {
-        "googleMapsApiKey": "AIzaSyAMPwg2GmuHVq301-VZ-Ei0eftVR8Z31rA"
+        "googleMapsApiKey": "Your-Google-API-Key"
       }
     },
     "android": {
