@@ -1,4 +1,4 @@
-export const GOOGLE_MAP_API_KEY = 'AIzaSyAMPwg2GmuHVq301-VZ-Ei0eftVR8Z31rA';
+export const GOOGLE_MAP_API_KEY = 'Your_Google_Map_API_Key';
 
 export const pizzaSizes = [
   {

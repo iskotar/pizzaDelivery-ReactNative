@@ -115,6 +115,6 @@ export function getNearbyPlacesBySearchRequest () {
         payload: data.results
       })
     })
-    .catch(err => err)
+    .catch(err => console.log(err))
   }
 }
