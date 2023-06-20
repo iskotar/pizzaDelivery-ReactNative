@@ -10,4 +10,5 @@
 ## Demo video
 
 
-https://user-images.githubusercontent.com/44509499/129464006-9627ec65-fc51-4f38-87d1-982e26aa8321.mp4
+
+https://github.com/iskotar/pizzaDelivery-ReactNative/assets/44509499/eaca0982-7b07-41bc-87ec-29961e991a77
